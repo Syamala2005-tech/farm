@@ -1,0 +1,998 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Fresh Connect - Direct Farm to Consumer Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a5f53;
+            --secondary-color: #2c8c76;
+            --accent-color: #e9c46a;
+            --light-color: #f8f9fa;
+            --dark-color: #264040;
+            --success-color: #2e933c;
+            --danger-color: #e76f51;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style-type: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon i {
+            font-size: 20px;
+            color: var(--dark-color);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/600') center/cover no-repeat;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-size: 16px;
+        }
+
+        .search-bar button {
+            padding: 15px 30px;
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            border: none;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        /* How it Works Section */
+        .how-it-works {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+        }
+
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            font-size: 18px;
+            margin: 0 auto 20px;
+        }
+
+        .step i {
+            font-size: 40px;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        /* Featured Products */
+        .featured-products {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .product:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product:hover .product-img img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-category {
+            color: var(--secondary-color);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .farmer-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .farmer-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+
+        .farmer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .farmer-name {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .testimonial-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 5px solid var(--primary-color);
+        }
+
+        .testimonial-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-text {
+            font-size: 18px;
+            color: #444;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .testimonial-role {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/600') center/cover no-repeat;
+            padding: 100px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(26, 95, 83, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon i {
+            font-size: 30px;
+            color: var(--primary-color);
+        }
+
+        .feature h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .feature p {
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .footer-links {
+            list-style-type: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .payment-method {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-method.active {
+            border-color: var(--primary-color);
+            background-color: rgba(26, 95, 83, 0.1);
+        }
+
+        .payment-method i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .user-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero h2 {
+                font-size: 36px;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .search-bar input {
+                border-radius: 30px;
+                margin-bottom: 10px;
+            }
+
+            .search-bar button {
+                border-radius: 30px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeIn 1s ease;
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+
+        /* Success message */
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <h1>Farm Fresh Connect</h1>
+                </div>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#market">Marketplace</a></li>
+                    <li><a href="#farmers">Farmers</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="user-actions">
+                    <a href="#" class="btn btn-outline login-btn">Login</a>
+                    <a href="#" class="btn btn-primary signup-btn">Sign Up</a>
+                    <div class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content animate">
+                <h2>Fresh Farm Products Direct to Your Doorstep</h2>
+                <p>Connect directly with local farmers and enjoy fresh, organic produce delivered to you</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for fresh produce...">
+                    <button type="submit"><i class="fas fa-search"></i> Search</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-title animate">
+                <h2>How It Works</h2>
+                <p>Our platform connects farmers directly with consumers, eliminating intermediaries and ensuring you get the freshest products at fair prices</p>
+            </div>
+            <div class="steps">
+                <div class="step animate">
+                    <div class="step-number">1</div>
+                    <i class="fas fa-user-plus"></i>
+                    <h3>Create an Account</h3>
+                    <p>Sign up as a consumer or farmer to start using our platform</p>
+                </div>
+                <div class="step animate">
+                    <div class="step-number">2</div>
+                    <i class="fas fa-search"></i>
+                    <h3>Browse Products</h3>
+                    <p>Explore a wide range of fresh, seasonal produce from local farmers</p>
+                </div>
+                <div class="step animate">
+                    <div class="step-number">3</div>
+                    <i class="fas fa-shopping-basket"></i>
+                    <h3>Place Your Order</h3>
+                    <p>Select your items and check out with our secure payment system</p>
+                </div>
+                <div class="step animate">
+                    <div class="step-number">4</div>
+                    <i class="fas fa-truck"></i>
+                    <h3>Get It Delivered</h3>
+                    <p>Receive farm-fresh products directly at your doorstep</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products" id="market">
+        <div class="container">
+            <div class="section-title animate">
+                <h2>Featured Products</h2>
+                <p>Discover the season's best offerings from our network of trusted farmers</p>
+            </div>
+            <div class="products">
+                <div class="product animate">
+                    <div class="product-img">
+                        <img src="/api/placeholder/400/200" alt="Organic Vegetables">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Vegetables</span>
+                        <h3 class="product-title">Organic Vegetable Basket</h3>
+                        <div class="product-price">$25.99</div>
+                        <div class="farmer-info">
+                            <div class="farmer-avatar">
+                                <img src="/api/placeholder/100/100" alt="Farmer John">
+                            </div>
+                            <span class="farmer-name">From: Farmer John</span>
+                        </div>
+                        <div class="product-actions">
+                            <a href="#" class="btn btn-outline add-to-cart-btn">Add to Cart</a>
+                            <a href="#" class="btn btn-primary buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product animate">
+                    <div class="product-img">
+                        <img src="/api/placeholder/400/200" alt="Fresh Fruits">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Fruits</span>
+                        <h3 class="product-title">Seasonal Fruit Basket</h3>
+                        <div class="product-price">$29.99</div>
+                        <div class="farmer-info">
+                            <div class="farmer-avatar">
+                                <img src="/api/placeholder/100/100" alt="Farmer Jane">
+                            </div>
+                            <span class="farmer-name">From: Farmer Jane</span>
+                        </div>
+                        <div class="product-actions">
+                            <a href="#" class="btn btn-outline add-to-cart-btn">Add to Cart</a>
+                            <a href="#" class="btn btn-primary buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product animate">
+                    <div class="product-img">
+                        <img src="/api/placeholder/400/200" alt="Free Range Eggs">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Dairy</span>
+                        <h3 class="product-title">Free Range Eggs (Dozen)</h3>
+                        <div class="product-price">$6.99</div>
+                        <div class="farmer-info">
+                            <div class="farmer-avatar">
+                                <img src="/api/placeholder/100/100" alt="Farmer Mike">
+                            </div>
+                            <span class="farmer-name">From: Farmer Mike</span>
+                        </div>
+                        <div class="product-actions">
+                            <a href="#" class="btn btn-outline add-to-cart-btn">Add to Cart</a>
+                            <a href="#" class="btn btn-primary buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product animate">
+                    <div class="product-img">
+                        <img src="/api/placeholder/400/200" alt="Organic Honey">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Honey</span>
+                        <h3 class="product-title">Organic Raw Honey</h3>
+                        <div class="product-price">$12.50</div>
+                        <div class="farmer-info">
+                            <div class="farmer-avatar">
+                                <img src="/api/placeholder/100/100" alt="Farmer Sarah">
+                            </div>
+                            <span class="farmer-name">From: Farmer Sarah</span>
+                        </div>
+                        <div class="product-actions">
+                            <a href="#" class="btn btn-outline add-to-cart-btn">Add to Cart</a>
+                            <a href="#" class="btn btn-primary buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title animate">
+                <h2>What Our Customers Say</h2>
+                <p>Hear from our satisfied customers and farmers who are part of our community</p>
+            </div>
+            <div class="testimonial-slider animate">
+                <div class="testimonial">
+                    <div class="testimonial-img">
+                        <img src="/api/placeholder/100/100" alt="Customer">
+                    </div>
+                    <p class="testimonial-text">"I've been getting my weekly groceries from Farm Fresh Connect for months now. The quality is outstanding, and I love supporting local farmers!"</p>
+                    <h4 class="testimonial-author">Emily Johnson</h4>
+                    <p class="testimonial-role">Regular Customer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Study - Farmer Success -->
+    <section class="features" id="farmers">
+        <div class="container">
+            <div class="section-title animate">
+                <h2>Farmer Success Stories</h2>
+                <p>Learn how our platform is helping farmers grow their business and reach more customers</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Farmer Jane's Success</h3>
+                    <p>An example of success is Farmer Jane's online store, "Farm Fresh Delivered," which grew her customer base significantly through e-commerce. Her organic vegetable sales increased by 150% in just six months after joining our platform.</p>
+                </div>
+                <div class="feature animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Growing Community</h3>
+                    <p>Our platform has connected over 500 farmers with thousands of consumers, creating a thriving marketplace for fresh, locally-sourced products.</p>
+                </div>
+                <div class="feature animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h3>Fair Pricing</h3>
+                    <p>Farmers on our platform earn 40% more than through traditional distribution channels, while consumers pay competitive prices for fresher products.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title animate">
+                <h2>Key Features</h2>
+                <p>Our platform offers everything you need for a seamless farm-to-table experience</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>User-Friendly Website</h3>
+                    <p>Design clean, intuitive websites that allow customers to explore products and place orders easily.</p>
+                
